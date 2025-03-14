@@ -7,7 +7,7 @@ const countSelect = document.getElementById("count-select");
 const ratioSelect = document.getElementById("ratio-select");
 const gridGallery = document.querySelector(".gallery-grid");
 
-const API_KEY = "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";
+const API_KEY = "";
 
 
 const examplesPrompr = [
