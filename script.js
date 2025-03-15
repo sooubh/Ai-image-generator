@@ -9,6 +9,14 @@ const gridGallery = document.querySelector(".gallery-grid");
 
 const API_KEY = "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";
 
+const bannedWords = [
+    "nude", "naked", "porn", "sex", "erotic", "explicit", "18+", "xxx", "fetish",
+    "bdsm", "adult", "nsfw", "boobs", "butt", "genital", "vagina", "penis", "breasts"
+];
+
+const isPromptSafe = (prompt) => {
+    return !bannedWords.some((word) => prompt.toLowerCase().includes(word));
+};
 
 const examplesPrompr = [
     "A futuristic cityscape at sunset with flying cars and neon lights",
@@ -38,46 +46,41 @@ const examplesPrompr = [
     const sysytemPreferDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     const isDarkTheme = saveTheme === "dark" || (!saveTheme && sysytemPreferDark);
     document.body.classList.toggle("dark-theme", isDarkTheme);
-    themeToggle.querySelector("i").className = isDarkTheme ? "fa-solid fa-sun" : "fa-solid fa-moon"
-
+    themeToggle.querySelector("i").className = isDarkTheme ? "fa-solid fa-sun" : "fa-solid fa-moon";
 })();
-// Theme Toggle start
+
 const toggleTheme = () => {
     const isDarkTheme = document.body.classList.toggle("dark-theme");
-    localStorage.setItem("theme", isDarkTheme ? "dark" : "light");;
-    themeToggle.querySelector("i").className = isDarkTheme ? "fa-solid fa-sun" : "fa-solid fa-moon"
-}
+    localStorage.setItem("theme", isDarkTheme ? "dark" : "light");
+    themeToggle.querySelector("i").className = isDarkTheme ? "fa-solid fa-sun" : "fa-solid fa-moon";
+};
 
 const getImageDimensions = (aspectRatio, baseSize = 512) => {
     const [width, height] = aspectRatio.split("/").map(Number);
     const scaleFactor = baseSize / Math.sqrt(width * height);
-
-    let calculateWidth = Math.round(width * scaleFactor);
-    let calculateHeight = Math.round(height * scaleFactor);
-
-    calculateHeight = Math.floor(calculateHeight / 16) * 16;
-    calculateWidth = Math.floor(calculateWidth / 16) * 16;
-
-    return { width: calculateWidth, height: calculateHeight };
+    return { 
+        width: Math.floor((width * scaleFactor) / 16) * 16, 
+        height: Math.floor((height * scaleFactor) / 16) * 16 
+    };
 };
+
 const updateImageCard = (imgIndex, imgUrl) => {
     const imgCard = document.getElementById(`img-card-${imgIndex}`);
-
     if (!imgCard) return;
     imgCard.classList.remove("loading");
-imgCard.innerHTML = `  <img src="${imgUrl}" class="result-img">
-                        <div class="img-overlay">
-                            <a href="${imgUrl}" class="img-downlode-btn" downlode="${Date.now()}.png">
-                                <i class="fa-solid fa-download"></i>
-                            </button>
-                        </div>`;
+    imgCard.innerHTML = `  <img src="${imgUrl}" class="result-img">
+                            <div class="img-overlay">
+                                <a href="${imgUrl}" class="img-downlode-btn" download="${Date.now()}.png">
+                                    <i class="fa-solid fa-download"></i>
+                                </a>
+                            </div>`;
 };
+
 const generateImages = async (slectModel, imageCount, aspectRatio, promptText) => {
     const MODEL_URL = `https://router.huggingface.co/hf-inference/models/${slectModel}`;
     const { width, height } = getImageDimensions(aspectRatio);
-
-    const imagesPromies = Array.from({ length: imageCount }, async (_, i) => {
-
+    
+    const imagesPromises = Array.from({ length: imageCount }, async (_, i) => {
         try {
             const response = await fetch(MODEL_URL, {
                 headers: {
@@ -89,60 +92,53 @@ const generateImages = async (slectModel, imageCount, aspectRatio, promptText) =
                 body: JSON.stringify({
                     inputs: promptText,
                     parameters: { width, height },
-                    options: { wait_for_model: true, use_cache: false, },
-                }
-                ),
+                    options: { wait_for_model: true, use_cache: false },
+                }),
             });
             if (!response.ok) throw new Error((await response.json())?.error);
-
             const result = await response.blob();
-            console.log(result);
             updateImageCard(i, URL.createObjectURL(result));
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     });
-    await Promise.allSettled(imagesPromies);
-}
-
+    await Promise.allSettled(imagesPromises);
+};
 
 const createImageCards = (slectModel, imageCount, aspectRatio, promptText) => {
     gridGallery.innerHTML = "";
-
     for (let i = 0; i < imageCount; i++) {
         gridGallery.innerHTML += `<div class="img-card loading" id="img-card-${i}" style="aspect-ratio: ${aspectRatio}">
                         <div class="status-container">
                             <div class="spinner"></div>
                             <i class="fa-solid fa-triangle-exclamation"></i>
-                            <p class="status-text">Genarating......</p>
+                            <p class="status-text">Generating...</p>
                         </div>
-                    
                     </div>`;
     }
-
     generateImages(slectModel, imageCount, aspectRatio, promptText);
-}
+};
 
 const handelFormSubmit = (e) => {
     e.preventDefault();
-
     const slectModel = modelSelect.value;
     const imageCount = parseInt(countSelect.value) || 1;
     const aspectRatio = ratioSelect.value || "1/1";
     const promptText = promptInput.value.trim();
 
-    createImageCards(slectModel, imageCount, aspectRatio, promptText);
-    console.log(slectModel, imageCount, aspectRatio, promptText);
+    if (!isPromptSafe(promptText)) {
+        alert("Your prompt contains inappropriate content. Please enter a different prompt.");
+        return;
+    }
 
-}
-// fill prompt input with random prompt
+    createImageCards(slectModel, imageCount, aspectRatio, promptText);
+};
+
 promptBtn.addEventListener("click", () => {
     const prompt = examplesPrompr[Math.floor(Math.random() * examplesPrompr.length)];
     promptInput.value = prompt;
     promptInput.focus();
-})
+});
 
 promptForm.addEventListener("submit", handelFormSubmit);
 themeToggle.addEventListener("click", toggleTheme);
-
-
