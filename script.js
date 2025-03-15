@@ -11,10 +11,10 @@ const API_KEY = "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";
 
 const bannedWords = [
     "nude", "naked", "porn", "pornography", "erotic", "explicit", "NSFW", "18+", "xxx", "sex", "sexual", "fetish", "BDSM", "kink", "seduction", "strip", "stripping", "lingerie", "topless", "bottomless", "adult content",
-    "breasts", "boobs", "nipples", "areola", "vagina", "clitoris", "penis", "testicles", "genitals", "crotch", "pubic", "pubic hair", "anus", "butt", "booty", "ass", "cleavage", "thong", "cameltoe",
-    "intercourse", "blowjob", "handjob", "oral sex", "anal sex", "penetration", "masturbation", "foreplay", "moaning", "climax", "cum", "ejaculation", "wet dream", "orgasm", "hentai", "doujinshi",
+    "breasts", "boobs", "nipples", "areola", "vagina", "clitoris", "penis", "testicles", "genitals", "crotch", "anus", "butt", "booty", "ass", "cleavage", "thong", "cameltoe",
+    "intercourse", "blowjob", "handjob", "oral sex", "anal sex", "masturbation", "foreplay", "moaning", "cum", "ejaculation", "wet dream", "orgasm",
     "sexy pose", "seductive", "erotic dance", "sensual", "hot girl", "hot guy", "barely dressed", "see-through", "wet shirt", "dominatrix", "submissive", "slave", "roleplay", "cosplay",
-    "underage", "child", "teen", "lolita", "incest", "rape", "abuse", "forced", "non-consensual", "bestiality", "necrophilia", "snuff", "gore"
+    "underage", "lolita", "rape", "abuse", "forced", "non-consensual", "bestiality", "necrophilia", "snuff", "gore"
 ];
 
 const isPromptSafe = (prompt) => {
