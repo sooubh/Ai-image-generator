@@ -23,7 +23,7 @@ const bannedWords = [
     "breasts", "boobs", "nipples", "areola", "vagina", "clitoris", "penis", "testicles", "genitals", "crotch", "anus", "butt", "booty", "ass", "cleavage", "thong", "cameltoe",
     "intercourse", "blowjob", "handjob", "oral sex", "anal sex", "masturbation", "foreplay", "moaning", "cum", "ejaculation", "wet dream", "orgasm",
     "sexy pose", "seductive", "erotic dance", "sensual", "hot girl", "hot guy", "barely dressed", "see-through", "wet shirt", "dominatrix", "submissive", "slave", "roleplay", "cosplay",
-    "underage", "lolita", "rape", "abuse", "forced", "non-consensual", "bestiality", "necrophilia", "snuff", "gore"
+    "underage", "lolita", "rape", "abuse", "forced", "non-consensual", "bestiality", "necrophilia", "snuff", "gore", "sourabh"
 ];
 
 const isPromptSafe = (prompt) => {
