@@ -118,8 +118,8 @@ const generateImages = async (slectModel, imageCount, aspectRatio, promptText) =
             imgCard.querySelector(".status-text").textContent = "Generation Failed....!  Check Console FOr More INfo:)"
         }
     });
-    GenarateBtn.removeAttribute("disabled");
     await Promise.allSettled(imagesPromises);
+    GenarateBtn.removeAttribute("disabled");
 };
 
 const createImageCards = (slectModel, imageCount, aspectRatio, promptText) => {
