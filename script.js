@@ -8,7 +8,12 @@ const countSelect = document.getElementById("count-select");
 const ratioSelect = document.getElementById("ratio-select");
 const gridGallery = document.querySelector(".gallery-grid");
 
-const API_KEY = "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";
+const API_KEY = prompt("Please enter your API key:");
+
+if (!API_KEY) {
+    alert("API key is required to proceed!");
+    throw new Error("No API key provided");
+}
 
 const bannedWords = [
     "nude", "naked", "porn", "pornography", "erotic", "explicit", "NSFW", "18+", "xxx", "sex", "sexual", "fetish", "BDSM", "kink", "seduction", "strip", "stripping", "lingerie", "topless", "bottomless", "adult content",
