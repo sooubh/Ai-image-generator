@@ -365,4 +365,29 @@ background: rgba(255, 255, 255, 0.4);
   text-align: center;
 }
 
+/* responsive */
 
+@media (max-width: 768px) {
+  .container{
+    padding: 18px;
+  }
+  .header .logo-wrapper .logo{
+    height: 50px;
+    width: 51px;
+    font-size: 1.25rem;
+  }
+
+.header .logo-wrapper h1{
+  font-size: 1.7rem;
+}
+.main-content .prompt-actions{
+  grid-template-columns: 1fr;
+  margin-top: -10px;
+}
+.prompt-actions .generate-btn {
+    margin: 10px 0 0;
+  }
+  .gallery-grid .img-card .img-overlay{
+      opacity: 1;
+  }
+}
