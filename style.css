@@ -242,6 +242,10 @@ body.dark-theme .container{
   margin-left: auto;
   background: var(--color-gradient);
 }
+.prompt-actions .generate-btn:disabled{
+  opacity: 0.6;
+  pointer-events: none;
+}
 
 .prompt-actions .generate-btn:hover {
   transform:translateY(-2px);

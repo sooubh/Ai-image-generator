@@ -1,5 +1,6 @@
 const themeToggle = document.querySelector(".theme-toggle");
 const promptBtn = document.querySelector(".prompt-btn");
+const GenarateBtn = document.querySelector(".generate-btn");
 const promptForm = document.querySelector(".prompt-form");
 const promptInput = document.querySelector(".propt-input");
 const modelSelect = document.getElementById("model-select");
@@ -82,7 +83,8 @@ const updateImageCard = (imgIndex, imgUrl) => {
 const generateImages = async (slectModel, imageCount, aspectRatio, promptText) => {
     const MODEL_URL = `https://router.huggingface.co/hf-inference/models/${slectModel}`;
     const { width, height } = getImageDimensions(aspectRatio);
-    
+    GenarateBtn.setAttribute("disabled", "true");
+
     const imagesPromises = Array.from({ length: imageCount }, async (_, i) => {
         try {
             const response = await fetch(MODEL_URL, {
@@ -103,8 +105,12 @@ const generateImages = async (slectModel, imageCount, aspectRatio, promptText) =
             updateImageCard(i, URL.createObjectURL(result));
         } catch (error) {
             console.error(error);
+            const imgCard = document.getElementById(`img-card-${i}`);
+            imgCard.classList.replace("loading", "error");
+            imgCard.querySelector(".status-text").textContent = "Generation Failed....!  Check Console FOr More INfo:)"
         }
     });
+    GenarateBtn.removeAttribute("disabled");
     await Promise.allSettled(imagesPromises);
 };
 
