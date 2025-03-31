@@ -112,7 +112,7 @@ const generateImages = async (slectModel, imageCount, aspectRatio, promptText) =
             console.error(error);
             const imgCard = document.getElementById(`img-card-${i}`);
             imgCard.classList.replace("loading", "error");
-            imgCard.querySelector(".status-text").textContent = "Generation Failed....!  Check Console FOr More INfo:)"
+            imgCard.querySelector(".status-text").textContent = "Generation Failed....!  Invalid! API Key OR Check Console FOr More INfo:)"
         }
     });
     await Promise.allSettled(imagesPromises);
