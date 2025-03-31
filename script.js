@@ -8,22 +8,19 @@ const countSelect = document.getElementById("count-select");
 const ratioSelect = document.getElementById("ratio-select");
 const gridGallery = document.querySelector(".gallery-grid");
 
-let API_KEY = "";
+let API_KEY = prompt("Please enter your API key:");
 
-while (!API_KEY) {
-    API_KEY = prompt("Please enter your API key:");
-    if (!API_KEY) {
-        alert("API key is required to proceed!");
-    }
+if (!API_KEY) {
+    alert("API key is required to proceed!");
+    // Handle the case where API_KEY is not provided (e.g., exit, disable features, etc.)
 }
 
-
 const bannedWords = [
-    // "nude", "naked", "porn", "pornography", "erotic", "explicit", "NSFW", "18+", "xxx", "sex", "sexual", "fetish", "BDSM", "kink", "seduction", "topless", "bottomless", "adult content",
-    // "breasts", "boobs", "nipples", "areola", "vagina", "clitoris", "penis", "testicles", "genitals", "crotch", "anus", "butt", "booty", "ass", "cleavage", "thong", "cameltoe",
-    // "intercourse", "blowjob", "handjob", "oral sex", "anal sex", "masturbation", "foreplay", "moaning", "cum", "ejaculation", "wet dream", "orgasm",
-    // "sexy pose", "seductive", "erotic dance", "sensual", "hot girl", "hot guy", "barely dressed", "see-through", "wet shirt", "dominatrix", "submissive", "slave", "roleplay", "cosplay",
-    // "underage", "lolita", "rape", "abuse", "sourabh"
+    "nude", "naked", "porn", "pornography", "erotic", "explicit", "NSFW", "18+", "xxx", "sex", "sexual", "fetish", "BDSM", "kink", "seduction", "topless", "bottomless", "adult content",
+    "breasts", "boobs", "nipples", "areola", "vagina", "clitoris", "penis", "testicles", "genitals", "crotch", "anus", "butt", "booty", "ass", "cleavage", "thong", "cameltoe",
+    "intercourse", "blowjob", "handjob", "oral sex", "anal sex", "masturbation", "foreplay", "moaning", "cum", "ejaculation", "wet dream", "orgasm",
+    "sexy pose", "seductive", "erotic dance", "sensual", "hot girl", "hot guy", "barely dressed", "see-through", "wet shirt", "dominatrix", "submissive", "slave", "roleplay", "cosplay",
+    "underage", "lolita", "rape", "abuse", "sourabh"
 ];
 
 const isPromptSafe = (prompt) => {
